@@ -14,7 +14,7 @@ templateTodoItem.innerHTML = `
       <input type="checkbox">
       <slot></slot>
     </label>
-    <button>x</button>
+    <button class="remove-btn">x</button>
   </li>
 `;
 
@@ -26,6 +26,17 @@ class TodoItem extends HTMLElement {
 
   connectedCallback() {
     this.shadowRoot.appendChild(templateTodoItem.content.cloneNode(true))
+    const $button = this.shadowRoot.querySelector('.remove-btn')
+    $button.addEventListener('click', this._removeTodo.bind(this))
+  }
+
+  _removeTodo(event) {
+    const removeEvent = new CustomEvent('remove-todo', {
+      bubbles: true,
+      composed: true,
+      detail: { index: this.index },
+    })
+    event.target.dispatchEvent(removeEvent)
   }
 }
 

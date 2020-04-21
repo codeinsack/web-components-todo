@@ -21,6 +21,7 @@ class TodoContainer extends HTMLElement {
     this.shadowRoot.appendChild(templateTodo.content.cloneNode(true))
     this.$list = this.shadowRoot.querySelector('.list')
     this.addEventListener('add-new-todo', this._addNewItem.bind(this))
+    this.addEventListener('remove-todo', this._removeItem.bind(this))
     this._render()
   }
 
@@ -30,6 +31,12 @@ class TodoContainer extends HTMLElement {
       text: newTodoText,
       checked: false,
     })
+    this._render()
+  }
+
+  _removeItem(event) {
+    const { index } = event.detail
+    this._list.splice(index, 1)
     this._render()
   }
 
