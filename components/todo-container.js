@@ -19,17 +19,28 @@ class TodoContainer extends HTMLElement {
 
   connectedCallback() {
     this.shadowRoot.appendChild(templateTodo.content.cloneNode(true))
+    this.$list = this.shadowRoot.querySelector('.list')
+    this.addEventListener('add-new-todo', this._addNewItem.bind(this))
+    this._render()
+  }
+
+  _addNewItem(event) {
+    const { newTodoText } = event.detail
+    this._list.push({
+      text: newTodoText,
+      checked: false,
+    })
     this._render()
   }
 
   _render() {
+    this.$list.innerHTML = '';
     this._list.forEach((item, index) => {
       const $item = document.createElement('todo-item')
-      const $list = this.shadowRoot.querySelector('.list')
       $item.textContent = item.text
       $item.checked = item.checked
       $item.index = index
-      $list.appendChild($item)
+      this.$list.appendChild($item)
     })
   }
 }
