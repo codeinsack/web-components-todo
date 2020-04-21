@@ -29,6 +29,7 @@ class TodoAdd extends HTMLElement {
       detail: { newTodoText: value },
     })
     event.target.dispatchEvent(addEvent)
+    this.$input.value = ''
   }
 }
 
