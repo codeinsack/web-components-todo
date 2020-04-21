@@ -17,8 +17,8 @@ class TodoAdd extends HTMLElement {
   connectedCallback() {
     this.shadowRoot.appendChild(templateTodoAdd.content.cloneNode(true))
     this.$input = this.shadowRoot.querySelector('.todo')
-    const $button = this.shadowRoot.querySelector('.add-btn')
-    $button.addEventListener('click', this._addNewTodo.bind(this))
+    const $addBtn = this.shadowRoot.querySelector('.add-btn')
+    $addBtn.addEventListener('click', this._addNewTodo.bind(this))
   }
 
   _addNewTodo(event) {

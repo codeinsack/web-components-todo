@@ -17,9 +17,6 @@ class TodoList extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue === newValue) {
-      return
-    }
     if (name === 'list') {
       this._list = JSON.parse(newValue)
       this._render()

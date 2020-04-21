@@ -20,9 +20,9 @@ class TodoContainer extends HTMLElement {
   connectedCallback() {
     this.shadowRoot.appendChild(templateTodoContainer.content.cloneNode(true))
     this.$list = this.shadowRoot.querySelector('todo-list')
+    this.$list.setAttribute('list', JSON.stringify(this._list))
     this.addEventListener('add-new-todo', this._addNewItem.bind(this))
     this.addEventListener('remove-todo', this._removeItem.bind(this))
-    this.$list.setAttribute('list', JSON.stringify(this._list))
   }
 
   _addNewItem(event) {

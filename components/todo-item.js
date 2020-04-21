@@ -4,7 +4,7 @@ templateTodoItem.innerHTML = `
     li {
       list-style-type: none;
     }
-    button {
+    button.remove-btn {
       border-radius: 50%;
       outline-width: 0;
     }
