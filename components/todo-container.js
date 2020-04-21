@@ -1,8 +1,8 @@
-const templateTodo = document.createElement('template')
-templateTodo.innerHTML = `
+const templateTodoContainer = document.createElement('template')
+templateTodoContainer.innerHTML = `
   <h1>What we need to do</h1>
   <todo-add></todo-add>
-  <ul class="list"></ul>
+  <todo-list></todo-list>
 `;
 
 class TodoContainer extends HTMLElement {
@@ -18,11 +18,11 @@ class TodoContainer extends HTMLElement {
   }
 
   connectedCallback() {
-    this.shadowRoot.appendChild(templateTodo.content.cloneNode(true))
-    this.$list = this.shadowRoot.querySelector('.list')
+    this.shadowRoot.appendChild(templateTodoContainer.content.cloneNode(true))
+    this.$list = this.shadowRoot.querySelector('todo-list')
     this.addEventListener('add-new-todo', this._addNewItem.bind(this))
     this.addEventListener('remove-todo', this._removeItem.bind(this))
-    this._render()
+    this.$list.setAttribute('list', JSON.stringify(this._list))
   }
 
   _addNewItem(event) {
@@ -31,24 +31,13 @@ class TodoContainer extends HTMLElement {
       text: newTodoText,
       checked: false,
     })
-    this._render()
+    this.$list.setAttribute('list', JSON.stringify(this._list))
   }
 
   _removeItem(event) {
     const { index } = event.detail
     this._list.splice(index, 1)
-    this._render()
-  }
-
-  _render() {
-    this.$list.innerHTML = '';
-    this._list.forEach((item, index) => {
-      const $item = document.createElement('todo-item')
-      $item.textContent = item.text
-      $item.checked = item.checked
-      $item.index = index
-      this.$list.appendChild($item)
-    })
+    this.$list.setAttribute('list', JSON.stringify(this._list))
   }
 }
 
